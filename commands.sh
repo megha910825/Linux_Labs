@@ -94,3 +94,112 @@ yum repolist all
 
 ## command to check which package provides the tcpdump command in the centos-lab
 yum provides tcpdump
+
+## command to list all cronjobs for the user
+crontab -l
+
+## command to edit crontab jobs
+crontab -e
+
+## Format of cronjob scheduling
+* * * * * ( Minutes, Hours, Day of the Month, Month Number, Day Number(SUN-SAT[0-6]))
+
+## command to know num of disk of block types
+lsblk
+
+## command to check size of disk
+sudo fdisk -l /dev/vdc
+
+## command to know major no of devices beginnt with vd
+
+ls -lr /dev/*vd
+
+## command to create a GPT partition call vdb1 of size 500M on the disk /dev/vdb
+Step1: Install gdisk
+sudo apt install gdisk
+
+Step2: Do the partition
+sudo gdisk /dev/ddb
+
+## Path of systemd service file 
+/etc/systemd/system/sample.service
+
+
+## Systemctl commands
+
+sudo systemctl status sample.service
+sudo systemctl start sample.service
+sudo systemctl stop sample.service
+sudo systemctl enabled sample.service
+sudo systemctl daemon-reload
+journalctl -u sample.service
+
+## ip link commands
+
+## command to add feault gateway
+sudo ip r default via 172.16.238.1
+
+## command to check if interface is up or not
+ip link 
+
+## set interfacte UP
+ip link set dev eth0 UP
+
+## command to check ip address
+ip a
+
+## command to check defaut connectivity
+telnet <name> <port>
+
+## command to delete default route
+sudo ip r del default
+
+## command to get which of group chris part of
+id chris
+
+## command to check disk type
+lsblk
+
+## command to check if file system is created 
+sudo df -h
+
+## command to make partition
+sudo gdisk /dev/vdb
+
+## command to make partition
+sudo mkfs.ext4 /dev/vdb
+
+## create directory /mnt/data
+sudo mkdir /mnt/data
+
+## mount the directory to /mnt/data
+sudo mount /dev/vdb /mnt/data
+
+## make mount volume persistent across the reboot
+make following entry in /etc/fstab file
+/dev/vdb        /mnt/data  ext4    rw  0       0
+
+
+## command to get individual disk size
+sudo lsblk
+
+## command to display physical volume
+pvdisplay
+
+## command to create physical volume
+pvcreate /dev/vdb
+
+## command to create volume group
+sudo vgcreate caleston_vg /dev/vdb /dev/vdc
+
+## command to create logical volume
+sudo lvcreate -L 1G -n data caleston_vg
+
+## command to create ext4 filesystem on the logical volume and mount it at /mnt/media
+mkdir /mnt/media
+mkfs.ext4 /dev/mapper/caleston_vg-data
+sudo mount /dev/mapper/caleston_vg-data /mnt/media
+
+## add 500M to existing logical volume
+sudo lvresize -L +500M -n /dev/mapper/caleston_vg-data
+sudo resize2fs /dev/mapper/caleston_vg-data
